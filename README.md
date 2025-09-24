@@ -68,3 +68,13 @@ If you have any questions, feedback, or issues, please don't hesitate to open an
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+## Notes
+
+- cd /home/quan/Robot-arm-control-with-RL && git add . (Thêm tất cả thay đổi vào staging)
+- cd /home/quan/Robot-arm-control-with-RL && git commit -m "Update training parameters and add visualization features" (Commit với message mô tả)
+- cd /home/quan/Robot-arm-control-with-RL && git push (Đẩy code lên GitHub)
+
+
+
+
