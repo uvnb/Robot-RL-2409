@@ -19,7 +19,7 @@ def her_augmentation(agent, obs_array, actions, new_obs_array):
             next_state = np.concatenate((new_obs, future_achgoal, future_achgoal))
 
             action = actions[future]
-            reward = agent.env.compute_reward(future_achgoal, future_achgoal, 1.0)
+            reward = agent.env.unwrapped.compute_reward(future_achgoal, future_achgoal, 1.0)
 
             # Store augmented experience in buffer
             agent.remember(state, action, reward, next_state, True)

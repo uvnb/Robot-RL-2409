@@ -1,32 +1,35 @@
 import tensorflow as tf
 import tensorflow.keras as keras
+import numpy as np
 from replay_memory.ReplayBuffer import ReplayBuffer
 from utils.networks import ActorNetwork, CriticNetwork
+
 
 ## Actor-critic networks parameters :
 
 # actor learning rate
-alpha = 0.001
+alpha = 1e-4
 
 # critic learning rate
-beta = 0.002
+beta = 1e-3
 
 ## DDPG algorithms paramters
 
 # discount factor
-gamma = 0.99
+gamma = 0.98
 
-# target netwroks soft update factor 
-tau = 0.005
+# target networks soft update factor 
+tau = 0.001
 
 # replay buffer max memory size
-max_size = 10**6
+max_size = int(1e6)
 
 # exploration noise factor 
-noise_factor = 0.1
+noise_factor = 0.16
+
 
 # training batch size 
-batch_size = 64
+batch_size = 128
 
 ## DDPG agent class 
 class DDPGAgent:
@@ -61,44 +64,48 @@ class DDPGAgent:
     
     # Main DDPG algorithms learning process
     def learn(self):
-          if self.memory.counter < self.batch_size:
-              return
+        if self.memory.counter < self.batch_size:
+            return None, None
 
-          # Sample batch size of experiences from replay buffer
-          states, actions, rewards, new_states, dones = self.memory.sample(self.batch_size)
-          states = tf.convert_to_tensor(states, dtype=tf.float32)
-          actions = tf.convert_to_tensor(actions, dtype=tf.float32)
-          rewards = tf.convert_to_tensor(rewards, dtype=tf.float32)
-          new_states = tf.convert_to_tensor(new_states, dtype=tf.float32)
+        # Sample batch size of experiences from replay buffer
+        states, actions, rewards, new_states, dones = self.memory.sample(self.batch_size)
+        states = tf.convert_to_tensor(states, dtype=tf.float32)
+        actions = tf.convert_to_tensor(actions, dtype=tf.float32)
+        rewards = tf.convert_to_tensor(rewards, dtype=tf.float32)
+        new_states = tf.convert_to_tensor(new_states, dtype=tf.float32)
 
-          # Calculate critic network loss
-          with tf.GradientTape() as tape:
-              target_actions = self.target_actor(new_states)
-              new_critic_value = tf.squeeze(self.target_critic(new_states, target_actions), 1)
-              critic_value = tf.squeeze(self.critic(states, actions), 1)
-              target = rewards + self.gamma * new_critic_value * (1 - dones)
-              critic_loss = tf.keras.losses.MSE(target, critic_value)
+        # Calculate critic network loss
+        with tf.GradientTape() as tape:
+            target_actions = self.target_actor(new_states)
+            new_critic_value = tf.squeeze(self.target_critic(new_states, target_actions), 1)
+            critic_value = tf.squeeze(self.critic(states, actions), 1)
+            target = rewards + self.gamma * new_critic_value * (1 - dones)
+            critic_loss = tf.keras.losses.MSE(target, critic_value)
+            critic_loss_value = critic_loss.numpy()
 
-          # Apply gradient decente with the calculated critic loss
-          critic_network_gradient = tape.gradient(critic_loss, self.critic.trainable_variables)
-          self.critic.optimizer.apply_gradients(zip(
-              critic_network_gradient, self.critic.trainable_variables 
-          ))
+        # Apply gradient decente with the calculated critic loss
+        critic_network_gradient = tape.gradient(critic_loss, self.critic.trainable_variables)
+        self.critic.optimizer.apply_gradients(zip(
+            critic_network_gradient, self.critic.trainable_variables 
+        ))
 
-          # Calculate actor network loss
-          with tf.GradientTape() as tape:
-              new_actions = self.actor(states)
-              actor_loss = - self.critic(states, new_actions)
-              actor_loss = tf.math.reduce_mean(actor_loss)
-          
-          # Apply gradient decente with the calculated actor loss
-          actor_network_gradient = tape.gradient(actor_loss, self.actor.trainable_variables)
-          self.actor.optimizer.apply_gradients(zip(
-                  actor_network_gradient, self.actor.trainable_variables 
-              ))
-          
-          # Update actor/critic target networks
-          self.update_parameters()
+        # Calculate actor network loss
+        actor_loss_value = None
+        with tf.GradientTape() as tape:
+            new_actions = self.actor(states)
+            actor_loss = - self.critic(states, new_actions)
+            actor_loss = tf.math.reduce_mean(actor_loss)
+            actor_loss_value = actor_loss.numpy()
+        
+        # Apply gradient decente with the calculated actor loss
+        actor_network_gradient = tape.gradient(actor_loss, self.actor.trainable_variables)
+        self.actor.optimizer.apply_gradients(zip(
+                actor_network_gradient, self.actor.trainable_variables 
+            ))
+        
+        # Update actor/critic target networks
+        self.update_parameters()
+        return actor_loss_value, critic_loss_value
 
     # Update actor/critic target networks parameters with soft update rule
     def update_parameters(self, tau=None):
@@ -142,3 +149,8 @@ class DDPGAgent:
         self.critic.compile(keras.optimizers.Adam(learning_rate=beta))
         self.target_actor.compile(keras.optimizers.Adam(learning_rate=alpha))
         self.target_critic.compile(keras.optimizers.Adam(learning_rate=beta))
+
+    
+
+
+
