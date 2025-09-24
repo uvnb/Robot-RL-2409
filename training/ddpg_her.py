@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
 
-    n_games = 1000
+    n_games = 250
     opt_steps = 64
     best_score = 0
     score_history = []

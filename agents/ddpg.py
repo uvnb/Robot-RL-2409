@@ -25,7 +25,7 @@ tau = 0.001
 max_size = int(1e6)
 
 # exploration noise factor 
-noise_factor = 0.16
+noise_factor = 0.165
 
 
 # training batch size 
