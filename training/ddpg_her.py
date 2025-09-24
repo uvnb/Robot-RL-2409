@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
 
-    n_games = 30
+    n_games = 500
     opt_steps = 64
     best_score = 0
     score_history = []
@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
 
     num_success = 0
-    threshold = 0.05  # hoặc giá trị phù hợp với môi trường của bạn (2.5cm)
+    threshold = 0.01  # hoặc giá trị phù hợp với môi trường của bạn (2.5cm)
 
 
 
