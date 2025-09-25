@@ -68,12 +68,7 @@ if __name__ == "__main__":
     # Initialize DDPG agent with better parameters
     agent = DDPGAgent(
         env=env,
-        input_dims=obs_shape,
-        lr_actor=0.0005,  # Slightly lower learning rate for stability
-        lr_critic=0.001, 
-        mem_size=100000,  # Larger memory buffer
-        batch_size=128,   # Larger batch size
-        tau=0.001         # Slower target network updates
+        input_dims=obs_shape
     )
 
     print(f"\n🤖 ENVIRONMENT INFO:")

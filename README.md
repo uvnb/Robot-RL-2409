@@ -215,3 +215,21 @@ robot_4dof_env.py - Môi trường simulation cho robot 4DOF
 ddpg_4dof_training.py - Script training chính
 test_4dof_env.py - Test môi trường trước khi training
 monitor_4dof_training.py - Monitor tiến trình training
+
+## lệnh training 
+🚀 LỆNH CHẠY TRAINING MODEL
+1️⃣ CHẠY VERSION OPTIMIZED (RECOMMENDED)
+cd /home/quan/Robot-arm-control-with-RL
+python3 training/ddpg_4dof_optimized.py
+2️⃣ CHẠY VERSION CỞ BẢN
+python training/ddpg_4dof_training.py
+3️⃣ QUICK TEST (nếu muốn test nhanh)
+python training/ddpg_4dof_quick_test.py
+
+📁 Dựa trên structure của bạn:
+🎯 KHUYẾN NGHỊ:
+Chạy version OPTIMIZED vì nó có:
+✅ Parameters tối ưu hơn (200 episodes, batch_size=128)
+✅ Enhanced logging với màu sắc và emoji
+✅ Better early stopping logic
+✅ Advanced statistics tracking
