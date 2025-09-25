@@ -1,0 +1,424 @@
+nohup: ignoring input
+2025-09-25 08:13:03.502152: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-09-25 08:13:03.709912: I tensorflow/core/util/util.cc:169] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-09-25 08:13:03.719921: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /home/quan/catkin_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins
+2025-09-25 08:13:03.719967: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2025-09-25 08:13:03.769159: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-09-25 08:13:04.765938: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /home/quan/catkin_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins
+2025-09-25 08:13:04.766060: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /home/quan/catkin_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins
+2025-09-25 08:13:04.766076: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2025-09-25 08:13:06.262535: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /home/quan/catkin_ws/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins:/home/quan/catkin_ws/install/lib/mavlink_sitl_gazebo/plugins
+2025-09-25 08:13:06.263150: W tensorflow/stream_executor/cuda/cuda_driver.cc:263] failed call to cuInit: UNKNOWN ERROR (303)
+2025-09-25 08:13:06.263232: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (quan): /proc/driver/nvidia/version does not exist
+2025-09-25 08:13:06.264087: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+🚀 IMPROVED 4-DOF ROBOT TRAINING WITH DDPG + HER 🚀
+🎯 IMPROVED TRAINING PARAMETERS:
+- Episodes: 150
+- Optimization steps per episode: 80
+- Success threshold: 0.08m (stricter precision)
+- Early stopping: 60.0% success rate
+- Stability window: 25 episodes
+
+Environment created:
+- Action space: (3,)
+- Max reach: 0.850m
+- Workspace radius: 0.600m
+- Total state space: 14
+DDPG Agent initialized with 14D input
+
+============================================================
+🏁 STARTING IMPROVED TRAINING...
+============================================================
+Ep   0: ❌ Steps=50, Score= 24.6, Dist=0.4802m 🔴
+       Actor=-8.5099, Critic= 0.5104
+Ep   1: ❌ Steps=50, Score=  9.0, Dist=0.7915m 🔴
+       Actor=-10.7657, Critic= 0.1008
+Ep   2: ❌ Steps=50, Score= 36.2, Dist=0.2087m 🔴
+       Actor=-10.3650, Critic= 1.3570
+Ep   3: ❌ Steps=50, Score= 30.7, Dist=0.3656m 🔴
+       Actor=-9.7014, Critic= 0.3300
+Ep   4: ❌ Steps=50, Score= 24.3, Dist=0.4909m 🔴
+       Actor=-9.9976, Critic= 0.1234
+Ep   5: ❌ Steps=50, Score= 23.9, Dist=0.3425m 🔴
+       Actor=-13.8183, Critic= 0.1898
+Ep   6: ❌ Steps=50, Score= 38.9, Dist=0.2003m 🔴
+       Actor=-12.3215, Critic= 1.6755
+Ep   7: ❌ Steps=50, Score=  9.7, Dist=0.7980m 🔴
+       Actor=-10.8728, Critic= 0.1148
+Ep   8: ❌ Steps=50, Score= 37.2, Dist=0.2173m 🔴
+       Actor=-11.6520, Critic= 0.0687
+Ep   9: ✅ Steps= 3, Score= 12.2, Dist=0.0472m 🟢
+       Actor=-11.7217, Critic= 0.0762
+Ep  10: ❌ Steps=50, Score= 23.1, Dist=0.5161m 🔴
+       Actor=-11.4827, Critic= 0.0510
+Ep  11: ❌ Steps=50, Score= 28.9, Dist=0.3850m 🔴
+       Actor=-10.1707, Critic= 0.1018
+Ep  12: ❌ Steps=50, Score= 36.6, Dist=0.2375m 🔴
+       Actor=-9.6008, Critic= 0.0675
+Ep  13: ❌ Steps=50, Score= 34.8, Dist=0.2527m 🔴
+       Actor=-10.8413, Critic= 0.2264
+Ep  14: ❌ Steps=50, Score= 24.5, Dist=0.5400m 🔴
+       Actor=-10.9372, Critic= 0.0601
+Ep  15: ❌ Steps=50, Score= 28.5, Dist=0.4166m 🔴
+       Actor=-10.1218, Critic= 0.0451
+Ep  16: ❌ Steps=50, Score= 20.4, Dist=0.5928m 🔴
+       Actor=-9.8122, Critic= 0.0264
+Ep  17: ❌ Steps=50, Score= 34.5, Dist=0.2403m 🔴
+       Actor=-10.0766, Critic= 0.1208
+Ep  18: ❌ Steps=50, Score= 31.1, Dist=0.3514m 🔴
+       Actor=-9.9616, Critic= 0.0429
+Ep  19: ❌ Steps=50, Score= 32.1, Dist=0.3150m 🔴
+       Actor=-9.7468, Critic= 0.0620
+Ep  20: ❌ Steps=50, Score= 38.1, Dist=0.2292m 🔴
+       Actor=-10.4293, Critic= 0.0355
+Ep  21: ❌ Steps=50, Score= 33.6, Dist=0.2999m 🔴
+       Actor=-9.4757, Critic= 0.0413
+Ep  22: ❌ Steps=50, Score= 28.6, Dist=0.4365m 🔴
+       Actor=-9.5497, Critic= 0.0244
+Ep  23: ❌ Steps=50, Score= 22.7, Dist=0.4956m 🔴
+       Actor=-9.6678, Critic= 0.0400
+Ep  24: ✅ Steps=15, Score= 22.2, Dist=0.0750m 🟢
+       Actor=-10.0527, Critic= 0.0238
+Ep  25: ❌ Steps=50, Score= 36.5, Dist=0.2334m 🔴
+       Actor=-10.5497, Critic= 0.0887
+Ep  26: ❌ Steps=50, Score= 24.6, Dist=0.4475m 🔴
+       Actor=-9.6636, Critic= 0.0456
+Ep  27: ✅ Steps= 6, Score= 14.5, Dist=0.0459m 🟢
+       Actor=-9.6372, Critic= 0.0179
+Ep  28: ❌ Steps=50, Score= 24.2, Dist=0.5240m 🔴
+       Actor=-9.9044, Critic= 0.0189
+Ep  29: ❌ Steps=50, Score= 21.2, Dist=0.5532m 🔴
+       Actor=-9.5740, Critic= 0.0082
+
+============================================================
+📊 PROGRESS UPDATE (Episode 30)
+============================================================
+🎯 Success Rate: 10.0%
+📈 Average Score: 26.90
+🏆 Best Score: 27.88
+📏 Avg Distance (last 30): 0.3710m
+🔥 Recent Success Rate (last 25): 12.0%
+🔊 Noise Factor: 0.165
+============================================================
+Ep  30: ❌ Steps=50, Score= 31.5, Dist=0.3038m 🔴
+       Actor=-9.7350, Critic= 0.0136
+Ep  31: ❌ Steps=50, Score= 27.7, Dist=0.3757m 🔴
+       Actor=-9.5297, Critic= 0.0104
+Ep  32: ❌ Steps=50, Score= 31.4, Dist=0.3690m 🔴
+       Actor=-9.6107, Critic= 0.0072
+Ep  33: ❌ Steps=50, Score= 24.0, Dist=0.5218m 🔴
+       Actor=-9.9137, Critic= 0.0095
+Ep  34: ❌ Steps=50, Score= 12.9, Dist=0.7065m 🔴
+       Actor=-9.6695, Critic= 0.0087
+Ep  35: ✅ Steps=10, Score= 16.7, Dist=0.0658m 🟢
+       Actor=-10.0502, Critic= 0.0372
+Ep  36: ❌ Steps=50, Score= 28.8, Dist=0.3948m 🔴
+       Actor=-9.8583, Critic= 0.0138
+Ep  37: ❌ Steps=50, Score= 13.8, Dist=0.6422m 🔴
+       Actor=-9.4005, Critic= 0.0101
+Ep  38: ✅ Steps= 4, Score= 13.0, Dist=0.0607m 🟢
+       Actor=-9.7339, Critic= 0.0113
+Ep  39: ❌ Steps=50, Score= 22.1, Dist=0.5456m 🔴
+       Actor=-9.9050, Critic= 0.0306
+Ep  40: ❌ Steps=50, Score= 27.4, Dist=0.4903m 🔴
+       Actor=-9.7892, Critic= 0.0177
+Ep  41: ❌ Steps=50, Score= 18.8, Dist=0.5527m 🔴
+       Actor=-9.6676, Critic= 0.0112
+Ep  42: ✅ Steps= 5, Score= 13.8, Dist=0.0795m 🟢
+       Actor=-9.8922, Critic= 0.0098
+Ep  43: ✅ Steps=43, Score= 39.6, Dist=0.0755m 🟢
+       Actor=-9.7073, Critic= 0.0473
+Ep  44: ✅ Steps=33, Score= 36.2, Dist=0.0784m 🟢
+       Actor=-9.9168, Critic= 0.0184
+Ep  45: ✅ Steps=14, Score= 21.8, Dist=0.0737m 🟢
+       Actor=-10.0789, Critic= 0.0429
+Ep  46: ✅ Steps=10, Score= 17.5, Dist=0.0559m 🟢
+       Actor=-10.3685, Critic= 0.0196
+Ep  47: ❌ Steps=50, Score= 26.8, Dist=0.4828m 🔴
+       Actor=-9.9997, Critic= 0.0346
+Ep  48: ❌ Steps=50, Score= 37.8, Dist=0.2224m 🔴
+       Actor=-9.7608, Critic= 0.0299
+Ep  49: ✅ Steps=11, Score= 18.8, Dist=0.0782m 🟢
+       Actor=-9.9151, Critic= 0.0176
+Ep  50: ✅ Steps= 8, Score= 16.2, Dist=0.0489m 🟢
+       Actor=-9.3864, Critic= 0.0233
+Ep  51: ✅ Steps= 9, Score= 17.0, Dist=0.0676m 🟢
+       Actor=-10.2497, Critic= 0.0441
+Ep  52: ❌ Steps=50, Score= 39.4, Dist=0.2625m 🔴
+       Actor=-10.0196, Critic= 0.0281
+Ep  53: ❌ Steps=50, Score= 36.7, Dist=0.2691m 🔴
+       Actor=-10.2576, Critic= 0.0193
+Ep  54: ❌ Steps=50, Score= 32.6, Dist=0.3228m 🔴
+       Actor=-10.2640, Critic= 0.0332
+Ep  55: ❌ Steps=50, Score= 26.6, Dist=0.4135m 🔴
+       Actor=-10.0124, Critic= 0.0317
+Ep  56: ❌ Steps=50, Score= 36.3, Dist=0.3344m 🔴
+       Actor=-10.1884, Critic= 0.0110
+Ep  57: ❌ Steps=50, Score= 38.4, Dist=0.2337m 🔴
+       Actor=-9.9313, Critic= 0.0182
+Ep  58: ❌ Steps=50, Score= 40.0, Dist=0.1521m 🔴
+       Actor=-10.4308, Critic= 0.0210
+Ep  59: ❌ Steps=50, Score= 31.3, Dist=0.3833m 🔴
+       Actor=-10.0479, Critic= 0.0350
+
+============================================================
+📊 PROGRESS UPDATE (Episode 60)
+============================================================
+🎯 Success Rate: 21.7%
+📈 Average Score: 26.70
+🏆 Best Score: 27.88
+📏 Avg Distance (last 30): 0.2888m
+🔥 Recent Success Rate (last 25): 40.0%
+🔊 Noise Factor: 0.165
+============================================================
+Ep  60: ❌ Steps=50, Score= 35.3, Dist=0.3706m 🔴
+       Actor=-10.1814, Critic= 0.0205
+Ep  61: ❌ Steps=50, Score= 32.4, Dist=0.4531m 🔴
+       Actor=-9.9328, Critic= 0.0084
+Ep  62: ❌ Steps=50, Score= 34.1, Dist=0.2872m 🔴
+       Actor=-9.8803, Critic= 0.0116
+Ep  63: ❌ Steps=50, Score= 36.6, Dist=0.2450m 🔴
+       Actor=-10.2164, Critic= 0.0490
+Ep  64: ❌ Steps=50, Score= 32.2, Dist=0.1908m 🔴
+       Actor=-10.0313, Critic= 0.0417
+Ep  65: ❌ Steps=50, Score= 31.4, Dist=0.2933m 🔴
+       Actor=-9.9685, Critic= 0.0238
+Ep  66: ❌ Steps=50, Score= 26.4, Dist=0.4307m 🔴
+       Actor=-10.3784, Critic= 0.0175
+Ep  67: ❌ Steps=50, Score= 27.2, Dist=0.3010m 🔴
+       Actor=-10.2961, Critic= 0.0186
+Ep  68: ❌ Steps=50, Score= 27.3, Dist=0.4619m 🔴
+       Actor=-10.3276, Critic= 0.0152
+Ep  69: ❌ Steps=50, Score= 24.8, Dist=0.5024m 🔴
+       Actor=-10.1785, Critic= 0.0256
+Ep  70: ❌ Steps=50, Score= 36.2, Dist=0.2340m 🔴
+       Actor=-10.5658, Critic= 0.0283
+Ep  71: ❌ Steps=50, Score= 36.9, Dist=0.2317m 🔴
+       Actor=-10.3512, Critic= 0.0194
+Ep  72: ❌ Steps=50, Score= 31.9, Dist=0.3353m 🔴
+       Actor=-10.4482, Critic= 0.0191
+Ep  73: ❌ Steps=50, Score= 37.3, Dist=0.4387m 🔴
+       Actor=-10.2497, Critic= 0.0171
+Ep  74: ❌ Steps=50, Score= 36.5, Dist=0.3977m 🔴
+       Actor=-10.3813, Critic= 0.0292
+Ep  75: ✅ Steps=39, Score= 41.7, Dist=0.0311m 🟢
+       Actor=-10.2421, Critic= 0.0233
+Ep  76: ❌ Steps=50, Score= 36.0, Dist=0.2214m 🔴
+       Actor=-10.1977, Critic= 0.0168
+Ep  77: ❌ Steps=50, Score= 33.5, Dist=0.2815m 🔴
+       Actor=-10.3315, Critic= 0.0133
+Ep  78: ❌ Steps=50, Score= 35.2, Dist=0.2559m 🔴
+       Actor=-10.6704, Critic= 0.0122
+Ep  79: ❌ Steps=50, Score= 36.2, Dist=0.3605m 🔴
+       Actor=-10.4618, Critic= 0.0217
+Ep  80: ❌ Steps=50, Score= 32.1, Dist=0.4025m 🔴
+       Actor=-10.3411, Critic= 0.0441
+Ep  81: ✅ Steps=39, Score= 36.9, Dist=0.0537m 🟢
+       Actor=-10.7602, Critic= 0.0200
+Ep  82: ❌ Steps=50, Score= 39.9, Dist=0.1608m 🔴
+       Actor=-10.3144, Critic= 0.0224
+Ep  83: ✅ Steps=16, Score= 21.8, Dist=0.0669m 🟢
+       Actor=-10.4649, Critic= 0.0184
+Ep  84: ❌ Steps=50, Score= 32.2, Dist=0.3545m 🔴
+       Actor=-10.5882, Critic= 0.0197
+Ep  85: ❌ Steps=50, Score= 30.2, Dist=0.3047m 🔴
+       Actor=-10.6023, Critic= 0.0216
+Ep  86: ❌ Steps=50, Score= 34.7, Dist=0.2822m 🔴
+       Actor=-10.2976, Critic= 0.0226
+Ep  87: ❌ Steps=50, Score= 32.8, Dist=0.2884m 🔴
+       Actor=-10.5783, Critic= 0.0248
+Ep  88: ❌ Steps=50, Score= 37.9, Dist=0.1923m 🔴
+       Actor=-10.8768, Critic= 0.0110
+Ep  89: ❌ Steps=50, Score= 34.3, Dist=0.3260m 🔴
+       Actor=-10.8274, Critic= 0.0257
+
+============================================================
+📊 PROGRESS UPDATE (Episode 90)
+============================================================
+🎯 Success Rate: 17.8%
+📈 Average Score: 28.93
+🏆 Best Score: 28.93
+📏 Avg Distance (last 30): 0.2919m
+🔥 Recent Success Rate (last 25): 12.0%
+🔊 Noise Factor: 0.161
+============================================================
+Ep  90: ❌ Steps=50, Score= 31.9, Dist=0.3663m 🔴
+       Actor=-10.8755, Critic= 0.0200
+Ep  91: ❌ Steps=50, Score= 35.8, Dist=0.2609m 🔴
+       Actor=-10.6948, Critic= 0.0104
+Ep  92: ❌ Steps=50, Score= 32.2, Dist=0.3357m 🔴
+       Actor=-10.6686, Critic= 0.0184
+Ep  93: ❌ Steps=50, Score= 31.1, Dist=0.3533m 🔴
+       Actor=-10.5357, Critic= 0.0201
+Ep  94: ❌ Steps=50, Score= 31.9, Dist=0.3769m 🔴
+       Actor=-10.5216, Critic= 0.0210
+Ep  95: ❌ Steps=50, Score= 33.8, Dist=0.2590m 🔴
+       Actor=-10.8292, Critic= 0.0150
+Ep  96: ❌ Steps=50, Score= 33.2, Dist=0.3310m 🔴
+       Actor=-10.9813, Critic= 0.0363
+Ep  97: ❌ Steps=50, Score= 26.7, Dist=0.4990m 🔴
+       Actor=-10.6663, Critic= 0.0101
+Ep  98: ❌ Steps=50, Score= 33.2, Dist=0.3059m 🔴
+       Actor=-10.6589, Critic= 0.0156
+Ep  99: ✅ Steps=16, Score= 22.1, Dist=0.0558m 🟢
+       Actor=-10.5594, Critic= 0.0334
+Ep 100: ❌ Steps=50, Score= 31.6, Dist=0.4935m 🔴
+       Actor=-10.9092, Critic= 0.0267
+Ep 101: ❌ Steps=50, Score= 34.6, Dist=0.3091m 🔴
+       Actor=-10.6514, Critic= 0.0141
+Ep 102: ❌ Steps=50, Score= 34.4, Dist=0.3161m 🔴
+       Actor=-10.7404, Critic= 0.0218
+Ep 103: ✅ Steps= 8, Score= 15.6, Dist=0.0750m 🟢
+       Actor=-10.8903, Critic= 0.0174
+Ep 104: ❌ Steps=50, Score= 32.2, Dist=0.2995m 🔴
+       Actor=-11.0600, Critic= 0.0226
+Ep 105: ❌ Steps=50, Score= 31.2, Dist=0.4876m 🔴
+       Actor=-10.9224, Critic= 0.0157
+Ep 106: ❌ Steps=50, Score= 35.9, Dist=0.2182m 🔴
+       Actor=-10.6631, Critic= 0.0165
+Ep 107: ❌ Steps=50, Score= 27.9, Dist=0.5479m 🔴
+       Actor=-10.9487, Critic= 0.0170
+Ep 108: ❌ Steps=50, Score= 36.6, Dist=0.3264m 🔴
+       Actor=-11.0215, Critic= 0.0127
+Ep 109: ❌ Steps=50, Score= 33.8, Dist=0.2424m 🔴
+       Actor=-10.9327, Critic= 0.0157
+Ep 110: ❌ Steps=50, Score= 37.1, Dist=0.2187m 🔴
+       Actor=-11.0074, Critic= 0.0188
+Ep 111: ❌ Steps=50, Score= 31.2, Dist=0.3365m 🔴
+       Actor=-11.1082, Critic= 0.0324
+Ep 112: ❌ Steps=50, Score= 34.3, Dist=0.2992m 🔴
+       Actor=-11.1566, Critic= 0.0277
+Ep 113: ❌ Steps=50, Score= 37.6, Dist=0.2933m 🔴
+       Actor=-11.0083, Critic= 0.0163
+Ep 114: ❌ Steps=50, Score= 37.3, Dist=0.2277m 🔴
+       Actor=-11.0373, Critic= 0.0181
+Ep 115: ❌ Steps=50, Score= 32.8, Dist=0.2387m 🔴
+       Actor=-11.1191, Critic= 0.0192
+Ep 116: ❌ Steps=50, Score= 33.7, Dist=0.3005m 🔴
+       Actor=-11.2231, Critic= 0.0150
+Ep 117: ❌ Steps=50, Score= 38.5, Dist=0.1855m 🔴
+       Actor=-11.1250, Critic= 0.0281
+Ep 118: ❌ Steps=50, Score= 29.0, Dist=0.4292m 🔴
+       Actor=-11.1148, Critic= 0.0258
+Ep 119: ❌ Steps=50, Score= 26.0, Dist=0.4967m 🔴
+       Actor=-11.1296, Critic= 0.0232
+
+============================================================
+📊 PROGRESS UPDATE (Episode 120)
+============================================================
+🎯 Success Rate: 15.0%
+📈 Average Score: 30.26
+🏆 Best Score: 30.34
+📏 Avg Distance (last 30): 0.3162m
+🔥 Recent Success Rate (last 25): 8.0%
+🔊 Noise Factor: 0.147
+============================================================
+Ep 120: ❌ Steps=50, Score= 33.5, Dist=0.2994m 🔴
+       Actor=-10.9487, Critic= 0.0314
+Ep 121: ❌ Steps=50, Score= 31.1, Dist=0.4139m 🔴
+       Actor=-11.3708, Critic= 0.0132
+Ep 122: ❌ Steps=50, Score= 35.4, Dist=0.2667m 🔴
+       Actor=-11.3067, Critic= 0.0125
+Ep 123: ❌ Steps=50, Score= 35.6, Dist=0.2498m 🔴
+       Actor=-11.3814, Critic= 0.0211
+Ep 124: ❌ Steps=50, Score= 33.1, Dist=0.2635m 🔴
+       Actor=-11.4487, Critic= 0.0130
+Ep 125: ❌ Steps=50, Score= 34.4, Dist=0.3474m 🔴
+       Actor=-11.2538, Critic= 0.0053
+Ep 126: ❌ Steps=50, Score= 36.3, Dist=0.2654m 🔴
+       Actor=-11.3663, Critic= 0.0146
+Ep 127: ❌ Steps=50, Score= 34.4, Dist=0.2866m 🔴
+       Actor=-11.3485, Critic= 0.0256
+Ep 128: ❌ Steps=50, Score= 34.0, Dist=0.2798m 🔴
+       Actor=-11.5229, Critic= 0.0205
+Ep 129: ❌ Steps=50, Score= 37.4, Dist=0.1995m 🔴
+       Actor=-11.3641, Critic= 0.0115
+Ep 130: ❌ Steps=50, Score= 35.1, Dist=0.2682m 🔴
+       Actor=-11.3037, Critic= 0.0154
+Ep 131: ❌ Steps=50, Score= 32.5, Dist=0.3637m 🔴
+       Actor=-11.3389, Critic= 0.0224
+Ep 132: ❌ Steps=50, Score= 31.5, Dist=0.3384m 🔴
+       Actor=-11.3288, Critic= 0.0151
+Ep 133: ❌ Steps=50, Score= 34.4, Dist=0.2829m 🔴
+       Actor=-11.7221, Critic= 0.0233
+Ep 134: ❌ Steps=50, Score= 26.9, Dist=0.4561m 🔴
+       Actor=-11.7166, Critic= 0.0106
+Ep 135: ❌ Steps=50, Score= 38.3, Dist=0.2513m 🔴
+       Actor=-11.6927, Critic= 0.0311
+Ep 136: ❌ Steps=50, Score= 31.8, Dist=0.3348m 🔴
+       Actor=-11.6265, Critic= 0.0160
+Ep 137: ❌ Steps=50, Score= 33.4, Dist=0.2797m 🔴
+       Actor=-11.5379, Critic= 0.0263
+Ep 138: ❌ Steps=50, Score= 36.2, Dist=0.2381m 🔴
+       Actor=-11.5393, Critic= 0.0115
+Ep 139: ❌ Steps=50, Score= 36.4, Dist=0.2400m 🔴
+       Actor=-11.7691, Critic= 0.0322
+Ep 140: ❌ Steps=50, Score= 37.9, Dist=0.1938m 🔴
+       Actor=-11.6409, Critic= 0.0083
+Ep 141: ❌ Steps=50, Score= 36.6, Dist=0.1893m 🔴
+       Actor=-11.4815, Critic= 0.0205
+Ep 142: ✅ Steps=25, Score= 26.3, Dist=0.0516m 🟢
+       Actor=-11.7419, Critic= 0.0143
+Ep 143: ❌ Steps=50, Score= 34.7, Dist=0.3332m 🔴
+       Actor=-11.4916, Critic= 0.0309
+Ep 144: ❌ Steps=50, Score= 31.1, Dist=0.4325m 🔴
+       Actor=-11.7935, Critic= 0.0066
+Ep 145: ❌ Steps=50, Score= 33.4, Dist=0.3306m 🔴
+       Actor=-11.6253, Critic= 0.0200
+Ep 146: ❌ Steps=50, Score= 34.4, Dist=0.3728m 🔴
+       Actor=-11.7978, Critic= 0.0172
+Ep 147: ❌ Steps=50, Score= 27.0, Dist=0.3840m 🔴
+       Actor=-12.0116, Critic= 0.0183
+Ep 148: ❌ Steps=50, Score= 34.2, Dist=0.2944m 🔴
+       Actor=-11.9045, Critic= 0.0150
+Ep 149: ❌ Steps=50, Score= 32.5, Dist=0.3853m 🔴
+       Actor=-12.2577, Critic= 0.0125
+
+============================================================
+📊 PROGRESS UPDATE (Episode 150)
+============================================================
+🎯 Success Rate: 12.7%
+📈 Average Score: 32.90
+🏆 Best Score: 32.90
+📏 Avg Distance (last 30): 0.2964m
+🔥 Recent Success Rate (last 25): 4.0%
+🔊 Noise Factor: 0.134
+============================================================
+
+============================================================
+🏁 IMPROVED TRAINING COMPLETED
+============================================================
+📊 Episodes Completed: 150/150
+🎯 Final Success Rate: 12.67%
+✅ Total Successes: 19/150
+🏆 Best Average Score: 32.90
+✔️  Training completed all planned episodes.
+
+📏 PRECISION ANALYSIS:
+   Average distance (last 30): 0.2964m
+   Best distance achieved: 0.0311m
+   Precision hits (last 30): 1/30 (3.3%)
+
+Generating visualization plots...
+✅ Visualization plots saved:
+  - training_progress_4dof.png
+  - success_rate_4dof.png
+  - distance_to_goal_4dof.png
+---- saving models ----
+Traceback (most recent call last):
+  File "training/ddpg_4dof_training.py", line 298, in <module>
+    agent.save_models()
+  File "/home/quan/Robot-arm-control-with-RL/agents/ddpg.py", line 129, in save_models
+    self.actor.save_weights(self.actor.checkpoints_file)
+  File "/home/quan/.local/lib/python3.8/site-packages/keras/utils/traceback_utils.py", line 70, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "/home/quan/.local/lib/python3.8/site-packages/h5py/_hl/files.py", line 562, in __init__
+    fid = make_fid(name, mode, userblock_size, fapl, fcpl, swmr=swmr)
+  File "/home/quan/.local/lib/python3.8/site-packages/h5py/_hl/files.py", line 241, in make_fid
+    fid = h5f.create(name, h5f.ACC_TRUNC, fapl=fapl, fcpl=fcpl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5f.pyx", line 122, in h5py.h5f.create
+FileNotFoundError: [Errno 2] Unable to synchronously create file (unable to open file: name = 'ckp/ddpg/actor.h5', errno = 2, error message = 'No such file or directory', flags = 13, o_flags = 242)
