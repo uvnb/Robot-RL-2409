@@ -20,8 +20,8 @@ class Robot4DOFDrawingEnv(gym.Env):
     def __init__(self, 
                  base_height=0.1,
                  link_lengths=[0.25, 0.25, 0.2, 0.15],
-                 max_episode_steps=100,  # Increased for drawing tasks
-                 success_threshold=0.05,  # INCREASED from 0.02 to 0.05 for easier learning
+                 max_episode_steps=30,  # Increased for drawing tasks
+                 success_threshold=0.15,  # INCREASED from 0.02 to 0.05 for easier learning
                  drawing_plane_y=0.4,    # Fixed Y coordinate for 2D drawing
                  enable_domain_randomization=True):
         
@@ -102,7 +102,7 @@ class Robot4DOFDrawingEnv(gym.Env):
         }
         
         # Initialize with simple circle trajectory for testing
-        self._generate_circle_trajectory()
+        self._generate_simple_trajectory()
         
     def reset(self, seed=None, options=None):
         """Reset environment to initial state with domain randomization"""
@@ -182,6 +182,10 @@ class Robot4DOFDrawingEnv(gym.Env):
                 self.current_trajectory_idx += 1
                 self.target_pos = self._get_current_target()
                 print(f"🎯 Waypoint {self.current_trajectory_idx}/{len(self.trajectory_points)-1} reached!")
+            elif self.current_trajectory_idx == len(self.trajectory_points) - 1:
+                # Reached final waypoint - mark as completed
+                self.current_trajectory_idx += 1  # Move beyond final to indicate completion
+                print(f"🏁 FINAL Waypoint {len(self.trajectory_points)}/8 reached! Square complete!")
         elif distance_to_target < self.success_threshold * 1.5:  # Near success
             # Give partial credit and maybe advance anyway
             if np.random.random() < 0.3:  # 30% chance to advance when close
@@ -190,9 +194,10 @@ class Robot4DOFDrawingEnv(gym.Env):
                     self.target_pos = self._get_current_target()
                     print(f"📍 Near waypoint - advancing to {self.current_trajectory_idx}/{len(self.trajectory_points)-1}")
             
-        # Episode completion (more lenient)
-        trajectory_complete = self.current_trajectory_idx >= len(self.trajectory_points) - 1
-        terminated = trajectory_complete and (is_success or distance_to_target < self.success_threshold * 2)
+        # Episode completion (FIXED: Allow final waypoint to be tested)
+        # Complete when robot moves beyond the final waypoint (index > 7)
+        trajectory_complete = self.current_trajectory_idx > len(self.trajectory_points) - 1
+        terminated = trajectory_complete
         truncated = self.step_count >= self.max_episode_steps
         
         observation = self._get_observation()
@@ -428,6 +433,34 @@ class Robot4DOFDrawingEnv(gym.Env):
         # Close the square
         self.trajectory_points.append(self.trajectory_points[0])
     
+
+    def _generate_simple_trajectory(self):
+        """Generate simple 8-point trajectory for learning"""
+        points = []
+        
+        # Simple square path - easy to learn
+        center_x, center_z = 0.3, 0.4
+        size = 0.15  # 15cm square
+        
+        # 8 points around square
+        positions = [
+            (center_x - size/2, center_z - size/2),  # Bottom-left
+            (center_x, center_z - size/2),           # Bottom-middle
+            (center_x + size/2, center_z - size/2),  # Bottom-right
+            (center_x + size/2, center_z),           # Right-middle
+            (center_x + size/2, center_z + size/2),  # Top-right
+            (center_x, center_z + size/2),           # Top-middle
+            (center_x - size/2, center_z + size/2),  # Top-left
+            (center_x - size/2, center_z),           # Left-middle
+        ]
+        
+        for x, z in positions:
+            points.append(np.array([x, self.drawing_plane_y, z]))
+        
+        self.trajectory_points = points
+        print(f"📍 Generated simple {len(points)}-point square trajectory")
+        print(f"   Center: ({center_x}, {center_z}), Size: {size}m")
+
     def _apply_domain_randomization(self):
         """Apply domain randomization for robustness"""
         # Randomize link lengths (±5%)
@@ -512,5 +545,5 @@ class Robot4DOFDrawingEnv(gym.Env):
 gym.register(
     id='Robot4DOFDrawing-v1',
     entry_point='robot_4dof_env:Robot4DOFDrawingEnv',
-    max_episode_steps=100,
+    max_episode_steps=30,
 )

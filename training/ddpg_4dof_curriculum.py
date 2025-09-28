@@ -1,35 +1,67 @@
 """
-Curriculum Learning Training script for 4-DOF Robot with DDPG + HER
-Gradually increases task difficulty by adjusting target distance and precision requirements
+Optimized DDPG+HER Training for 4-DOF Robot Drawing Task
+Features: Enhanced reward, domain randomization, trajectory following
+Fine-tuned for stability and performance on drawing tasks
 """
 
 import numpy as np
 import gymnasium as gym
 import sys
 import os
+import random
+import torch
 
 # Add parent directory to path to import custom environment
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from robot_4dof_env import Robot4DOFReachEnv
+from robot_4dof_env import Robot4DOFDrawingEnv
 from agents.ddpg import DDPGAgent
 from utils.HER import her_augmentation
 import matplotlib.pyplot as plt
 
 
-class CurriculumManager:
-    """Manages curriculum learning progression for robot training"""
+class DrawingCurriculumManager:
+    """Manages curriculum learning for drawing tasks with increasing complexity"""
     
     def __init__(self):
         self.stage = 0
         self.stages = [
-            {"name": "Stage 1: Close targets", "max_distance": 0.3, "threshold": 0.15, "episodes": 50},
-            {"name": "Stage 2: Medium targets", "max_distance": 0.5, "threshold": 0.12, "episodes": 75},
-            {"name": "Stage 3: Far targets", "max_distance": 0.8, "threshold": 0.10, "episodes": 100},
-            {"name": "Stage 4: Full range", "max_distance": 1.0, "threshold": 0.08, "episodes": 150}
+            {
+                "name": "🎯 Stage 1: Simple Circles", 
+                "trajectory_type": "circle",
+                "trajectory_params": {"radius": 0.10, "num_points": 20},
+                "success_threshold": 0.025,
+                "episodes": 50,
+                "domain_randomization": False
+            },
+            {
+                "name": "⭕ Stage 2: Medium Circles + Noise", 
+                "trajectory_type": "circle",
+                "trajectory_params": {"radius": 0.15, "num_points": 30},
+                "success_threshold": 0.020,
+                "episodes": 60,
+                "domain_randomization": True
+            },
+            {
+                "name": "⬜ Stage 3: Squares", 
+                "trajectory_type": "square",
+                "trajectory_params": {"size": 0.20, "num_points_per_side": 10},
+                "success_threshold": 0.020,
+                "episodes": 70,
+                "domain_randomization": True
+            },
+            {
+                "name": "🔥 Stage 4: Complex Shapes + Full Randomization", 
+                "trajectory_type": "circle",
+                "trajectory_params": {"radius": 0.18, "num_points": 40},
+                "success_threshold": 0.015,
+                "episodes": 60,
+                "domain_randomization": True
+            }
         ]
         self.episodes_in_stage = 0
         self.stage_success_rates = []
+        self.stage_rewards = []
         
     def get_current_params(self):
         """Get current curriculum parameters"""
@@ -37,37 +69,46 @@ class CurriculumManager:
             return self.stages[-1]
         return self.stages[self.stage]
     
-    def should_advance(self, recent_success_rate, min_success_rate=0.6):
-        """Check if should advance to next stage"""
+    def should_advance(self, recent_success_rate, recent_avg_reward, min_success_rate=0.4):
+        """Enhanced advancement criteria for drawing tasks"""
         current_stage = self.get_current_params()
         
-        # Advance if success rate is good and minimum episodes completed
-        if (recent_success_rate >= min_success_rate and 
-            self.episodes_in_stage >= current_stage["episodes"] * 0.6):
+        print(f"📊 Stage progress: {self.episodes_in_stage}/{current_stage['episodes']} episodes")
+        print(f"   Success rate: {recent_success_rate:.2f}, Avg reward: {recent_avg_reward:.2f}")
+        
+        # Advance if performance is good and minimum episodes completed
+        min_episodes = int(current_stage["episodes"] * 0.7)  # Complete 70% of episodes
+        performance_good = recent_success_rate >= min_success_rate and recent_avg_reward > 0.5
+        
+        if performance_good and self.episodes_in_stage >= min_episodes:
+            print(f"✅ Performance criteria met! Advancing to next stage...")
             return True
             
-        # Force advance if completed all episodes for this stage
+        # Force advance if completed all episodes for this stage  
         if self.episodes_in_stage >= current_stage["episodes"]:
+            print(f"⏰ Stage time limit reached. Advancing anyway...")
             return True
             
         return False
+            
+        return False
     
-    def advance_stage(self, recent_success_rate):
+    def advance_stage(self, success_rate, avg_reward):
         """Advance to next curriculum stage"""
-        current_stage = self.get_current_params()
-        self.stage_success_rates.append({
-            "stage": self.stage,
-            "name": current_stage["name"],
-            "episodes": self.episodes_in_stage,
-            "success_rate": recent_success_rate
-        })
+        self.stage_success_rates.append(success_rate)
+        self.stage_rewards.append(avg_reward)
         
-        self.stage += 1
-        self.episodes_in_stage = 0
-        
-        if self.stage < len(self.stages):
-            next_stage = self.get_current_params()
-            print(f"\n🎓 CURRICULUM ADVANCEMENT!")
+        if self.stage < len(self.stages) - 1:
+            self.stage += 1
+            self.episodes_in_stage = 0
+            print(f"\n🚀 ADVANCING TO {self.stages[self.stage]['name']}")
+            print(f"   New success threshold: {self.stages[self.stage]['success_threshold']}")
+            print(f"   New trajectory: {self.stages[self.stage]['trajectory_type']}")
+            print(f"   Domain randomization: {self.stages[self.stage]['domain_randomization']}")
+            return True
+        else:
+            print(f"\n🎉 CURRICULUM COMPLETED! All stages finished.")
+            return False
             print(f"Completed: {current_stage['name']} (Success: {recent_success_rate*100:.1f}%)")
             print(f"Starting: {next_stage['name']}")
             print(f"New parameters - Max distance: {next_stage['max_distance']}m, Threshold: {next_stage['threshold']}m")
@@ -90,7 +131,7 @@ if __name__ == "__main__":
     curriculum = CurriculumManager()
     
     # Training parameters
-    max_total_episodes = 500
+    max_total_episodes = 150
     opt_steps = 64
     best_score = 0
     
@@ -124,19 +165,21 @@ if __name__ == "__main__":
     # Create 4-DOF robot environment with initial curriculum parameters
     initial_params = curriculum.get_current_params()
     env = Robot4DOFReachEnv(
-        render_mode=None,
-        max_distance_from_origin=initial_params["max_distance"],
         success_threshold=initial_params["threshold"]
     )
+    # Set curriculum parameters properly
+    env.max_distance_from_origin = initial_params["max_distance"]
+    env.success_threshold = initial_params["threshold"]  # Make sure both are set
     
     # Initialize DDPG agent
-    agent = DDPGAgent(lr_actor=0.001, lr_critic=0.001, input_dims=env.observation_space.shape[0] + 6,
-                      n_actions=env.action_space.shape[0], mem_size=50000)
+    # State dimension: observation(8) + achieved_goal(3) + desired_goal(3) = 14
+    state_dim = 14
+    agent = DDPGAgent(env=env, input_dims=state_dim)
 
     print(f"\nEnvironment Info:")
-    print(f"- Observation space: {env.observation_space.shape}")
+    print(f"- Observation space: {env.observation_space}")
     print(f"- Action space: {env.action_space.shape}")
-    print(f"- State dimension: {env.observation_space.shape[0] + 6}")
+    print(f"- State dimension: {state_dim}")
 
     print(f"\nStarting curriculum stage: {initial_params['name']}")
     print(f"Initial parameters - Max distance: {initial_params['max_distance']}m, Threshold: {initial_params['threshold']}m")
@@ -144,14 +187,10 @@ if __name__ == "__main__":
     # Training loop
     for i in range(max_total_episodes):
         
-        # Update current curriculum parameters
+        # Update environment parameters every episode to ensure consistency
         current_params = curriculum.get_current_params()
-        
-        # Update environment if parameters changed
-        if (hasattr(env, 'max_distance_from_origin') and 
-            env.max_distance_from_origin != current_params["max_distance"]):
-            env.max_distance_from_origin = current_params["max_distance"]
-            env.success_threshold = current_params["threshold"]
+        env.max_distance_from_origin = current_params["max_distance"]
+        env.success_threshold = current_params["threshold"]
 
         # Episode variables
         obs_array = []

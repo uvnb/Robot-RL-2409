@@ -1,0 +1,10 @@
+# 4-DOF Robot Reinforcement Learning Dependencies
+# Core ML/RL libraries
+tensorflow>=2.10.0
+numpy>=1.21.0
+gymnasium>=0.28.0
+matplotlib>=3.5.0
+
+# Optional: For enhanced training
+# panda-gym  # If using PandaReach comparison
+# wandb      # For experiment tracking

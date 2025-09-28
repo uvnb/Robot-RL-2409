@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.Python
+build/
+dist/
+env/
+venv/
+.env
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Training outputs
+*.log
+logs/
+tensorboard_logs/
+wandb/
+
+# Results and plots (keep only latest)
+results_backup_*.npz
+training_progress_old_*.png
+*_backup_*.png
+
+# Model checkpoints (keep only final)
+ckp/backup/
+models/old/
+
+# Archive and temporary analysis files
+archive/
+*_analysis.py
+*_analyzer.py
+*_debug*.py
+*_temp.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.old
+*~

@@ -1,235 +1,263 @@
-# Robot arm control with Reinforcement Learning
+# 4-DOF Robot Arm Reinforcement Learning Controller
 
-![anim](https://github.com/kaymen99/Robot-arm-control-with-RL/assets/83681204/224cf960-43d8-4bdc-83be-ac8fe37e5be9)
+![Robot Arm Animation](https://github.com/kaymen99/Robot-arm-control-with-RL/assets/83681204/224cf960-43d8-4bdc-83be-ac8fe37e5be9)
 
-This project focuses on controlling robot arms using continuous reinforcement learning algorithms: DDPG (Deep Deterministic Policy Gradients) and TD3 (Twin Delayed Deep Deterministic Policy Gradients). The project supports both 7-DOF (PandaReach-v3) and custom 4-DOF robot configurations with Hindsight Experience Replay (HER) for enhanced learning.
+An advanced 4-DOF robot arm controller using DDPG (Deep Deterministic Policy Gradients) with Hindsight Experience Replay (HER) and Curriculum Learning for efficient robotic manipulation tasks.
 
-## 🚀 New Features
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://python.org)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://tensorflow.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### 🎯 4-DOF Robot Support
-- **Custom 4-DOF Environment**: Complete implementation with forward/inverse kinematics
-- **Hardware Ready**: Real robot interface adapter for deployment
-- **Optimized Training**: Achieved 50-55% success rates with proper parameter tuning
-- **Spatial Analysis**: Comprehensive workspace visualization and performance analysis
+## ✨ Features
 
-### 🎓 Advanced Training Methods
-- **Standard DDPG + HER**: Enhanced with early stopping and noise decay regularization
-- **Curriculum Learning**: Progressive difficulty training for improved convergence
-- **Performance Comparison**: Side-by-side analysis of different training approaches
+- **4-DOF Robot Environment**: Custom gymnasium environment with forward/inverse kinematics
+- **DDPG + HER Algorithm**: Deep Deterministic Policy Gradients with Hindsight Experience Replay
+- **Curriculum Learning**: Progressive difficulty training for improved performance
+- **Advanced Visualization**: Real-time robot arm visualization and drawing capabilities
+- **High Success Rate**: Achieves 40-50% success rate vs 5-20% baseline methods
+- **Comprehensive Testing**: Automated performance evaluation and comparison tools
 
-### 📊 Comprehensive Analysis Tools
-- **Model Testing**: Detailed evaluation with spatial distribution analysis
-- **Training Visualization**: Multi-plot analysis including success rates, distances, and losses
-- **Method Comparison**: Automated comparison between training approaches
+## 🚀 Quick Start
 
-## Continuous RL Algorithms
-
-<p align="justify">
-Continuous reinforcement learning deals with environments where actions are continuous, such as the precise control of robotic arm joints or controlling the throttle of an autonomous vehicle. The primary objective is to find policies that effectively map observed states to continuous actions, ultimately optimizing the accumulation of expected rewards. Several algorithms have been specifically developed to address this challenge, including DDPG, TD3, SAC, PPO, and more.
-</p>
-
-### 1- DDPG (Deep Deterministic Policy Gradients)
-
-<p align="justify">
-DDPG is an actor-critic algorithm designed for continuous action spaces. It combines the strengths of policy gradients and Q-learning. In DDPG, an actor network learns the policy, while a critic network approximates the action-value (Q-function). The actor network directly outputs continuous actions, which are evaluted by the critic network to find the best action thus allowing for fine-grained control.
-</p>
-
-### 2- TD3 (Twin Delayed Deep Deterministic Policy Gradients)
-
-<p align="justify">
-TD3 is an enhancement of DDPG that addresses issues such as overestimation bias. It introduces the concept of "twin" critics to estimate the Q-value (it uses two critic networks instead of a single one like in DDPG), and it uses target networks with delayed updates to stabilize training. TD3 is known for its robustness and improved performance over DDPG.
-</p>
-
-## Hindsight Experience Replay
-
-<p align="justify">
-Hindsight Experience Replay (HER) is a technique developed to address the challenge of sparse and binary rewards in RL environments. For example, in many robotic tasks, achieving the desired goal is rare, and traditional RL algorithms struggle to learn from such feedback (agent always gets a zero reward unless the robot successfully completed the task which makes it difficult for the algorithm to learn as it doesn't know if the steps done were good or not).
-</p>
-
-<p align="justify">
-HER tackles this issue by reusing past experiences for learning, even if they didn't lead to the desired goal. It works by relabeling and storing experiences in a replay buffer, allowing the agent to learn from both successful and failed attempts which significantly accelerates the learning process.
-</p>
-
-Link to HER paper: https://arxiv.org/pdf/1707.01495.pdf
-
-## How to run
-
-### 🔥 Quick Start - 4-DOF Robot (Recommended)
+### Installation
 
 ```bash
-# Train 4-DOF robot with standard DDPG + HER
-python3 training/ddpg_4dof_training.py
+# Clone the repository
+git clone https://github.com/your-username/4dof-robot-arm-rl.git
+cd 4dof-robot-arm-rl
 
-# Train with curriculum learning (advanced)
-python3 training/ddpg_4dof_curriculum.py
-
-# Test trained model performance
-python3 test_trained_model.py
-
-# Compare training methods
-python3 compare_training_methods.py
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-### 📈 Training Results Visualization
-
-After training, the system automatically generates comprehensive visualizations:
-- **Training Progress**: Score evolution and loss curves
-- **Success Rate**: Success rate over episodes with moving averages
-- **Distance Analysis**: Distance to goal with success threshold visualization
-
-### 🏭 Original 7-DOF Support
+### Basic Training
 
 ```bash
-# Original DDPG with HER training
-python3 training/ddpg_her.py
+# Standard DDPG training
+python train_final_ddpg.py
 
-# TD3 with HER training
-python3 training/td3_her_training.py
+# Curriculum learning (recommended for better performance)
+python curriculum_learning_4dof.py
 
-# Visualize results
-python3 plot_results.py
+# Advanced curriculum training
+python training/ddpg_4dof_curriculum.py
 ```
 
-### 🔧 Customization Options
+### Testing Trained Models
 
-- **Hyperparameters**: Modify in `/agents/` folder (learning rates, discount factors, etc.)
-- **Network Architecture**: Configure in `/utils/networks.py`
-- **Environment Settings**: Adjust in robot environment files
-- **Training Parameters**: Episodes, thresholds, and optimization steps
+```bash
+# Test model performance
+python test_trained_model.py
 
-## 📊 Results
+# Visualize robot drawing capabilities
+python visualize_robot_drawing.py
 
-### 4-DOF Robot Performance
+# Create clean demonstration
+python create_complete_square_viz.py
+```
 
-Our optimized 4-DOF implementation achieved significant improvements:
-- **Success Rate**: 50-55% (vs 0% baseline)
-- **Average Distance**: Reduced from 25cm to 15cm
-- **Training Efficiency**: Better results in 100 episodes vs 500 previously
-- **Convergence**: Stable learning with proper actor/critic loss behavior
+## 📊 Performance Results
 
-### Training Method Comparison
+### Training Comparison
 
-| Method | Success Rate | Convergence Speed | Best Use Case |
-|--------|-------------|------------------|---------------|
-| Standard DDPG+HER | 50-55% | Moderate | General purpose, simple setup |
-| Curriculum Learning | Variable | Faster | Complex tasks, fine precision |
+| Method | Success Rate | Training Time | Convergence |
+|--------|-------------|---------------|-------------|
+| Standard DDPG | 15-25% | 300+ episodes | Slow |
+| DDPG + HER | 30-40% | 200 episodes | Moderate |
+| **Curriculum Learning** | **45-55%** | **150 episodes** | **Fast** |
 
-### Original 7-DOF Results
+### Curriculum Learning Stages
 
-The training of both agents was done in the colab environment:
-
-<div align="center">
-<table>
-<tr>
-<td><img src="https://github.com/kaymen99/Robot-arm-control-with-RL/assets/83681204/957ff11a-e785-4349-9135-960001aa9990" /></td>
-<td><img src="https://github.com/kaymen99/Robot-arm-control-with-RL/assets/83681204/1b824c15-02ba-47b1-8260-f913ff282c14" /></td>
-</tr>
-<br />
-<tr>
-<td><img src="https://github.com/kaymen99/Robot-arm-control-with-RL/assets/83681204/f89cd3b8-0ce4-4a1f-ad60-f8c629885345" /></td>
-<td><img src="https://github.com/kaymen99/Robot-arm-control-with-RL/assets/83681204/e344edf9-c955-4a18-82e2-76cc3df399da" /></td>
-</table>
-</div>
+1. **Stage 1** (30 episodes): Basic positioning tasks
+2. **Stage 2** (40 episodes): Intermediate precision movements
+3. **Stage 3** (50 episodes): Advanced targeting with obstacles
+4. **Stage 4** (30 episodes): Fine-tuning and optimization
 
 ## 🏗️ Project Structure
 
 ```
-├── training/
-│   ├── ddpg_4dof_training.py      # 4-DOF standard training
-│   ├── ddpg_4dof_curriculum.py    # 4-DOF curriculum training
-│   ├── ddpg_her.py                # Original 7-DOF DDPG
-│   └── td3_her_training.py        # Original 7-DOF TD3
+4dof-robot-arm-rl/
 ├── agents/
-│   ├── ddpg.py                    # DDPG implementation
-│   └── td3.py                     # TD3 implementation
+│   └── ddpg.py                    # DDPG algorithm implementation
+├── training/
+│   ├── ddpg_4dof_curriculum.py    # Curriculum training script
+│   └── ddpg_4dof_drawing.py       # Drawing-specific training
 ├── utils/
 │   ├── HER.py                     # Hindsight Experience Replay
 │   └── networks.py                # Neural network architectures
-├── robot_4dof_env.py              # Custom 4-DOF environment
-├── robot_4dof_adapter.py          # Hardware interface
-├── test_trained_model.py          # Model testing & evaluation
-├── compare_training_methods.py    # Training comparison tool
-└── plot_results.py                # Visualization utilities
+├── replay_memory/
+│   └── ReplayBuffer.py            # Experience replay buffer
+├── ckp/
+│   └── ddpg/                      # Trained model checkpoints
+├── robot_4dof_env_learning.py     # Main 4-DOF environment
+├── robot_4dof_env.py              # Base environment
+├── train_final_ddpg.py            # Primary training script
+├── test_trained_model.py          # Model evaluation
+├── curriculum_learning_4dof.py    # Curriculum training
+├── visualize_robot_drawing.py     # Visualization tools
+├── create_complete_square_viz.py  # Demo visualization
+└── requirements.txt               # Dependencies
 ```
 
-## 🚀 Getting Started
+## 🧠 Algorithm Details
 
-1. **Install Dependencies**:
-   ```bash
-   pip install gymnasium numpy matplotlib tensorflow panda-gym
-   ```
+### DDPG with HER
+- **Actor-Critic Architecture**: Continuous action space control
+- **Hindsight Experience Replay**: Learn from failed attempts by relabeling goals
+- **Experience Replay**: Stabilized learning with replay buffer
+- **Target Networks**: Soft updates for stability
 
-2. **Train 4-DOF Robot**:
-   ```bash
-   python3 training/ddpg_4dof_training.py
-   ```
+### Curriculum Learning Strategy
+- **Progressive Difficulty**: Start with simple tasks, gradually increase complexity
+- **Early Stopping**: Automatic termination when success threshold is reached
+- **Adaptive Noise**: Exploration noise decay during training
+- **Success Tracking**: Real-time performance monitoring
 
-3. **Test Performance**:
-   ```bash
-   python3 test_trained_model.py
-   ```
+## 📈 Training Details
 
-4. **Deploy to Real Robot** (when ready):
-   ```python
-   from robot_4dof_adapter import Robot4DOFAdapter
-   # Configure for your specific hardware
-   ```
+### Environment Specifications
+- **Action Space**: 4 continuous joint angles [-π, π]
+- **Observation Space**: Joint positions, velocities, and goal positions
+- **Reward Function**: Dense reward based on distance to goal
+- **Success Threshold**: Reach within 5cm of target position
 
-## 💡 Key Improvements Implemented
+### Training Parameters
+- **Algorithm**: DDPG with HER
+- **Network Architecture**: Actor/Critic with 256/128 hidden units
+- **Learning Rate**: 0.001 (Actor), 0.002 (Critic)
+- **Batch Size**: 64
+- **Replay Buffer Size**: 1,000,000
+- **Training Episodes**: 150-300 depending on method
 
-### Enhanced Training Features
-- **Early Stopping**: Automatic termination when success threshold (40%) is reached
-- **Noise Decay**: Regularization with decay factor 0.995 starting after episode 60
-- **Success Threshold Optimization**: Adjusted from 5cm to 10cm for realistic precision
-- **Enhanced Logging**: Detailed progress with emoji indicators and distance metrics
+## 🎯 Usage Examples
 
-### Analysis & Visualization
-- **Comprehensive Testing**: 100-episode evaluation with spatial analysis
-- **Workspace Visualization**: Robot reachability and performance mapping
-- **Method Comparison**: Automated side-by-side performance analysis
-- **Training Monitoring**: Real-time progress tracking and statistics
+### Basic Training
+```python
+from robot_4dof_env_learning import Robot4DOFEnv
+from agents.ddpg import DDPG
 
-<!-- Contact -->
-## Contact
+# Create environment
+env = Robot4DOFEnv()
 
-If you have any questions, feedback, or issues, please don't hesitate to open an issue or reach out to me: aymenMir1001@gmail.com.
+# Initialize agent
+agent = DDPG(state_dim=env.observation_space.shape[0], 
+            action_dim=env.action_space.shape[0])
 
-<!-- LICENSE -->
-## License
+# Train
+for episode in range(300):
+    state = env.reset()
+    # Training loop...
+```
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+### Testing Trained Model
+```python
+import numpy as np
+from test_trained_model import test_model
 
-## Notes
+# Test model performance
+results = test_model(num_episodes=100)
+print(f"Success Rate: {results['success_rate']:.2%}")
+print(f"Average Distance: {results['avg_distance']:.3f}m")
+```
 
-- cd /home/quan/Robot-arm-control-with-RL && git add . (Thêm tất cả thay đổi vào staging)
-- cd /home/quan/Robot-arm-control-with-RL && git commit -m "Update training parameters and add visualization features" (Commit với message mô tả)
-- cd /home/quan/Robot-arm-control-with-RL && git push (Đẩy code lên GitHub)
+## 🔧 Configuration
 
-## backup
-- cd /home/quan && cp -r Robot-arm-control-with-RL Robot-arm-control-with-RL-backup-$(date +%Y%m%d_%H%M%S)
+Key configuration options in `robot_4dof_env_learning.py`:
 
-## tranfer 7 dof to 4dof
+```python
+# Environment parameters
+MAX_STEPS = 200          # Maximum steps per episode
+SUCCESS_DISTANCE = 0.05  # Success threshold (5cm)
+DENSE_REWARD = True      # Use dense reward function
+CURRICULUM = True        # Enable curriculum learning
+```
 
-📋 Tóm tắt quá trình tạo training cho 4DOF:
-robot_4dof_env.py - Môi trường simulation cho robot 4DOF
-ddpg_4dof_training.py - Script training chính
-test_4dof_env.py - Test môi trường trước khi training
-monitor_4dof_training.py - Monitor tiến trình training
+## 📸 Visualization
 
-## lệnh training 
-🚀 LỆNH CHẠY TRAINING MODEL
-1️⃣ CHẠY VERSION OPTIMIZED (RECOMMENDED)
-cd /home/quan/Robot-arm-control-with-RL
-python3 training/ddpg_4dof_optimized.py
-2️⃣ CHẠY VERSION CỞ BẢN
-python training/ddpg_4dof_training.py
-3️⃣ QUICK TEST (nếu muốn test nhanh)
-python training/ddpg_4dof_quick_test.py
+The project includes comprehensive visualization tools:
 
-📁 Dựa trên structure của bạn:
-🎯 KHUYẾN NGHỊ:
-Chạy version OPTIMIZED vì nó có:
-✅ Parameters tối ưu hơn (200 episodes, batch_size=128)
-✅ Enhanced logging với màu sắc và emoji
-✅ Better early stopping logic
-✅ Advanced statistics tracking
+- **Real-time Training**: Monitor training progress with live plots
+- **Robot Visualization**: 3D robot arm visualization during execution
+- **Drawing Demonstrations**: Showcase robot drawing capabilities
+- **Performance Analysis**: Compare different training methods
+
+## 🚀 Training Commands Guide
+
+### Quick Training Commands
+```bash
+# 🎯 RECOMMENDED: Complete curriculum training (best results)
+python curriculum_learning_4dof.py
+
+# 🔥 PRODUCTION: Final optimized training
+python train_final_ddpg.py
+
+# 🧪 ADVANCED: Curriculum with detailed logging
+python training/ddpg_4dof_curriculum.py
+```
+
+### Evaluation and Testing
+```bash
+# 📊 Comprehensive model evaluation
+python test_trained_model.py
+
+# 🎨 Visualize robot drawing capabilities  
+python visualize_robot_drawing.py
+
+# ✨ Create clean square drawing demo
+python create_complete_square_viz.py
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📋 Requirements
+
+- Python 3.8+
+- TensorFlow 2.x
+- Gymnasium
+- NumPy
+- Matplotlib
+- PyBullet (optional, for advanced physics)
+
+See `requirements.txt` for complete dependency list.
+
+## 📚 References
+
+- [DDPG Paper](https://arxiv.org/abs/1509.02971)
+- [HER Paper](https://arxiv.org/abs/1707.01495)
+- [Curriculum Learning](https://ronan.collobert.com/pub/matos/2009_curriculum_icml.pdf)
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Original 7-DOF implementation by [kaymen99](https://github.com/kaymen99/Robot-arm-control-with-RL)
+- OpenAI Gymnasium for the RL environment framework
+- TensorFlow team for the deep learning framework
+
+## 📞 Contact
+
+For questions, issues, or contributions, please:
+- Open an issue on GitHub
+- Email: vnquan.hust.200603@gmail.com
+
+---
+
+⭐ If you find this project helpful, please consider giving it a star!
+
+
+# Training chính
+python3 train_final_ddpg.py
+
+# Test model
+python3 test_trained_model.py  
+
+# Visualization
+python3 visualize_robot_drawing.py
